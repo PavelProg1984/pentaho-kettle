@@ -47,7 +47,6 @@ public class FileDialog implements IFileDialog {
   String [] filterExtensions = new String[] { "*" };
   String [] fileNames = new String[1];
   String fileName = null;
-  int fileDialogMode = VfsFileChooserDialog.VFS_DIALOG_OPEN_FILE;
 
   protected VfsFileChooserDialog vfsFileChooserDialog;
 
@@ -74,6 +73,12 @@ public class FileDialog implements IFileDialog {
 
   public String open() {
     String filePath = null;
+
+    int fileDialogMode = VfsFileChooserDialog.VFS_DIALOG_OPEN_FILE;
+    if ( ( style & SWT.SAVE ) > 0 ) {
+      fileDialogMode = VfsFileChooserDialog.VFS_DIALOG_SAVEAS;
+    }
+
     FileObject returnFile =
         vfsFileChooserDialog.open( parent, fileName, filterExtensions, filterNames, fileDialogMode );
     File file = null;
